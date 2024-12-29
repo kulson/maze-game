@@ -24,8 +24,8 @@ function preload() {
   game.scale.pageAlignHorizontally = true;
   game.scale.pageAlignVertically = true;
   game.stage.backgroundColor = "#fff";
-  game.load.image("pacman", "assets/pacman-right.png");
-  game.load.image("wall", "assets/wall.png");
+  this.load.image("pacman", "assets/pacman-right.png");
+  this.load.image("wall", "assets/wall.png");
 }
 
 function create() {
