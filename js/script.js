@@ -3,36 +3,38 @@ var FONT = 32;
 
 // map dimensions
 var ROWS = 10;
-var COLS = 15;
+var COLS = ROWS;
 
 // the structure of the map
-var map;
-
+var map = [
+  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [0, 1, 0, 0, 1, 0, 0, 0, 0, 1],
+  [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+  [0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+];
 var pacman;
 var wall;
 var finish;
 
-console.log("haah");
 var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {
-  preload: preload,
   create: create,
-  update: update,
 });
-
-function preload() {
-  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-  game.scale.pageAlignHorizontally = true;
-  game.scale.pageAlignVertically = true;
-  game.stage.backgroundColor = "#fff";
-  this.load.image("pacman", "assets/pacman-right.png");
-  this.load.image("wall", "assets/wall.png");
-}
 
 function create() {
   // init keyboard commands
   game.input.keyboard.addCallbacks(null, null, onKeyUp);
+
+  game.stage.backgroundColor = "#000";
+  game.load.image("pacman", "pacman-right.png");
+  game.load.image("wall", "assets/wall.png");
   pacman = game.add.sprite(32, 32, "pacman");
-  wall = game.add.sprite(32, 32, "wall");
+  //wall = game.add.sprite(32, 32, "wall");
 }
 
 var directions = [
