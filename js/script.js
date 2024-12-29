@@ -22,18 +22,36 @@ var pacman;
 var wall;
 var finish;
 
-var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {
-  create: create,
-});
+var config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  scene: {
+    preload: preload,
+    create: create,
+    update: update,
+  },
+};
+
+var game = new Phaser.Game(config);
+
+function preload() {
+  console.log("haah");
+  this.load.image("pacman", "assets/pacman-right.png");
+  this.load.image("wall", "assets/wall.png");
+}
 
 function create() {
   // init keyboard commands
-  game.input.keyboard.addCallbacks(null, null, onKeyUp);
+  cursors = this.input.keyboard.addKeys({
+    up: Phaser.Input.Keyboard.KeyCodes.W,
+    down: Phaser.Input.Keyboard.KeyCodes.S,
+    left: Phaser.Input.Keyboard.KeyCodes.A,
+    right: Phaser.Input.Keyboard.KeyCodes.D,
+  });
 
-  game.stage.backgroundColor = "#000";
-  game.load.image("pacman", "pacman-right.png");
-  game.load.image("wall", "assets/wall.png");
-  pacman = game.add.sprite(32, 32, "pacman");
+  this.load.setCORS("anonymous");
+  this.add.image(32, 32, "pacman").setOrigin(0, 0);
   //wall = game.add.sprite(32, 32, "wall");
 }
 
@@ -49,26 +67,15 @@ var pacmanPosition = {
   y: 0,
 };
 
-function update() {}
-
-function onKeyUp(event) {
-  switch (event.keyCode) {
-    case Keyboard.A:
-      console.log("lewo");
-      moveTo(pacmanPosition, directions[0]);
-      break;
-    case Keyboard.D:
-      console.log("prawo");
-      moveTo(pacmanPosition, directions[1]);
-      break;
-    case Keyboard.W:
-      console.log("gora");
-      moveTo(pacmanPosition, directions[2]);
-      break;
-    case Keyboard.S:
-      console.log("dol");
-      moveTo(pacmanPosition, directions[3]);
-      break;
+function update() {
+  if (cursors.up.isLeft) {
+    moveTo(pacmanPosition, directions[0]);
+  } else if (cursors.down.isRight) {
+    moveTo(pacmanPosition, directions[1]);
+  } else if (cursors.down.isUp) {
+    moveTo(pacmanPosition, directions[2]);
+  } else if (cursors.down.isDown) {
+    moveTo(pacmanPosition, directions[3]);
   }
 }
 
