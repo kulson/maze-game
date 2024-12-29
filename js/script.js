@@ -14,7 +14,8 @@ var wall;
 var finish;
 
 var config = {
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
+  parent: "game-container",
   width: 800,
   height: 600,
   scene: {
@@ -27,22 +28,14 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
-  console.log("haah");
-  this.load.image("pacman", "assets/pacman-right.png");
+  this.load.image("knight", "/assets/knight.jpg");
   this.load.image("wall", "assets/wall.png");
 }
 
 function create() {
-  // init keyboard commands
-  cursors = this.input.keyboard.addKeys({
-    left: Phaser.Input.Keyboard.KeyCodes.A,
-    right: Phaser.Input.Keyboard.KeyCodes.D,
-    up: Phaser.Input.Keyboard.KeyCodes.W,
-    down: Phaser.Input.Keyboard.KeyCodes.S,
-  });
-
-  this.add.image(0, 0, "pacman");
-  this.add.image(50, 50, "wall");
+  let pacman = this.add.image(16, 16, "knight");
+  pacman.scale = 0.5;
+  let wall = this.add.image(16, 16, "wall");
 }
 
 var directions = [
@@ -58,6 +51,7 @@ var pacmanPosition = {
 };
 
 function update() {
+  /*
   if (cursors.up.isLeft) {
     console.log("left");
     //moveTo(pacmanPosition, directions[0]);
@@ -71,6 +65,7 @@ function update() {
     console.log("down");
     //moveTo(pacmanPosition, directions[3]);
   }
+  */
 }
 
 function moveTo(pacmanPosition, direction) {
@@ -84,14 +79,12 @@ function moveTo(pacmanPosition, direction) {
     currentPacmanPosition.x >= 0 &&
     currentPacmanPosition.x <= COLS - 1 &&
     currentPacmanPosition.y >= 0 &&
-    currentPacmanPosition.y <= ROWS - 1 &&
-  ) {
-    console.log("haava");
-  }
-  if (
-    currentPacmanPosition.x === ROWS - 1 &&
-    currentPacmanPosition.y === COLS - 1
-  ) {
-    console.log("koniec gry");
-  }
+    currentPacmanPosition.y <= ROWS - 1
+  )
+    if (
+      currentPacmanPosition.x === ROWS - 1 &&
+      currentPacmanPosition.y === COLS - 1
+    ) {
+      console.log("koniec gry");
+    }
 }
