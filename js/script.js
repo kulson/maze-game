@@ -3,22 +3,13 @@ var FONT = 32;
 
 // map dimensions
 var ROWS = 10;
-var COLS = ROWS;
+var COLS = 10;
 
 // the structure of the map
-var map = [
-  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [0, 1, 0, 0, 1, 0, 0, 0, 0, 1],
-  [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-  [0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-];
-var pacman;
+var pacmanRight;
+var pacmanLeft;
+var pacmanUp;
+var pacmanDown;
 var wall;
 var finish;
 
@@ -44,15 +35,14 @@ function preload() {
 function create() {
   // init keyboard commands
   cursors = this.input.keyboard.addKeys({
-    up: Phaser.Input.Keyboard.KeyCodes.W,
-    down: Phaser.Input.Keyboard.KeyCodes.S,
     left: Phaser.Input.Keyboard.KeyCodes.A,
     right: Phaser.Input.Keyboard.KeyCodes.D,
+    up: Phaser.Input.Keyboard.KeyCodes.W,
+    down: Phaser.Input.Keyboard.KeyCodes.S,
   });
 
-  this.load.setCORS("anonymous");
-  this.add.image(32, 32, "pacman").setOrigin(0, 0);
-  //wall = game.add.sprite(32, 32, "wall");
+  this.add.image(0, 0, "pacman");
+  this.add.image(50, 50, "wall");
 }
 
 var directions = [
@@ -69,13 +59,17 @@ var pacmanPosition = {
 
 function update() {
   if (cursors.up.isLeft) {
-    moveTo(pacmanPosition, directions[0]);
+    console.log("left");
+    //moveTo(pacmanPosition, directions[0]);
   } else if (cursors.down.isRight) {
-    moveTo(pacmanPosition, directions[1]);
+    console.log("right");
+    //moveTo(pacmanPosition, directions[1]);
   } else if (cursors.down.isUp) {
-    moveTo(pacmanPosition, directions[2]);
+    console.log("up");
+    //moveTo(pacmanPosition, directions[2]);
   } else if (cursors.down.isDown) {
-    moveTo(pacmanPosition, directions[3]);
+    console.log("down");
+    //moveTo(pacmanPosition, directions[3]);
   }
 }
 
@@ -91,9 +85,9 @@ function moveTo(pacmanPosition, direction) {
     currentPacmanPosition.x <= COLS - 1 &&
     currentPacmanPosition.y >= 0 &&
     currentPacmanPosition.y <= ROWS - 1 &&
-    map[currentPacmanPosition.x][currentPacmanPosition.y] === 1
-  )
-    console.log(currentPacmanPosition);
+  ) {
+    console.log("haava");
+  }
   if (
     currentPacmanPosition.x === ROWS - 1 &&
     currentPacmanPosition.y === COLS - 1
