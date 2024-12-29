@@ -60,4 +60,3 @@ function generate(n) {
     }
     return kruskal();
 }
-console.log(generate(3))
