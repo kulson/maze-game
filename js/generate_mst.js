@@ -28,19 +28,8 @@ function generate(n) {
                     anc[second_anc] = first_anc;
                     mass[first_anc] += mass[second_anc];
                 }
-                
-
                 let u1 = Math.floor(u / n);
-                let v1 = Math.floor(v / n);
-
-                if(k == 0)
-                {
-                    mst[2*u1-1][(u%n)*2] = 0;
-                }
-                else
-                {
-                    mst[2*u1][(u%n)*2+1] = 0;
-                }
+                k == 0 ? mst[2*u1-1][(u%n)*2] = 0 : mst[2*u1][(u%n)*2+1] = 0;
             }
             for(let i=0;i<2*n;i+=2)
                 for(let j=0;j<2*n;j+=2)
