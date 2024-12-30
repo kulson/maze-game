@@ -74,6 +74,8 @@ function update() {
   knight.y = knightPosition.y * 64;
 }
 
+function endGame() {}
+
 function moveTo(direction) {
   var currentknightPosition = {
     x: 0,
@@ -92,11 +94,11 @@ function moveTo(direction) {
       currentknightPosition.y === COLS - 1
     ) {
       console.log("koniec gry");
+      endGame();
     }
   } else {
     currentknightPosition.x = knightPosition.x;
     currentknightPosition.y = knightPosition.y;
   }
-  console.log(currentknightPosition);
   return currentknightPosition;
 }
