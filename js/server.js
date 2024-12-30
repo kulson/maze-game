@@ -13,9 +13,11 @@ app.get("/", (req, res) => {
   let seconds = currentTime.getSeconds();
   let message;
   if (seconds < 45) {
+    seconds = 45 - seconds;
     message = "Game is running: ";
   } else {
     seconds -= 45;
+    seconds = 15 - seconds;
     message = "Break: ";
   }
   res.send(`${message}${seconds}`);

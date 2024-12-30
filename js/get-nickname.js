@@ -8,7 +8,6 @@ function askNickname() {
 if (!localStorage.getItem("nickname")) {
   askNickname();
 }
-/*
 const nickname = localStorage.getItem("nickname");
 axios
   .post("http://localhost:3000/api/nickname", { nickname })
@@ -18,4 +17,3 @@ axios
   .catch((error) => {
     console.error("Error sending nickname:", error);
   });
-*/
