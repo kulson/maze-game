@@ -6,12 +6,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 app.get("/", (req, res) => {
   const currentTime = new Date();
@@ -20,7 +15,7 @@ app.get("/", (req, res) => {
   if (seconds < 45) {
     message = "Game is running: ";
   } else {
-    seconds = 45;
+    seconds -= 45;
     message = "Break: ";
   }
   res.send(`${message}${seconds}`);

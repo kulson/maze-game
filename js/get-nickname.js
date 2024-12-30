@@ -19,12 +19,3 @@ axios
     console.error("Error sending nickname:", error);
   });
 */
-
-axios
-  .get("http://localhost:3000/")
-  .then((response) => {
-    console.log("Server time fetched:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error with fetching server time:", error);
-  });
