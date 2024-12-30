@@ -34,6 +34,7 @@ function preload() {
   this.load.image("knight", "assets/knight.png?v=3");
   this.load.image("finish", "assets/finish.png");
 }
+
 function create() {
   knight = this.add.image(0, 0, "knight");
   knight.setOrigin(0, 0);
@@ -62,16 +63,12 @@ var knightPosition = {
 function update() {
   if (keyA.isDown) {
     knightPosition = moveTo(directions[0]);
-    console.log("left");
   } else if (keyD.isDown) {
     knightPosition = moveTo(directions[1]);
-    console.log("right");
   } else if (keyW.isDown) {
     knightPosition = moveTo(directions[2]);
-    console.log("up");
   } else if (keyS.isDown) {
     knightPosition = moveTo(directions[3]);
-    console.log("down");
   }
   knight.x = knightPosition.x * 64;
   knight.y = knightPosition.y * 64;
