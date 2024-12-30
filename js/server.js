@@ -1,10 +1,30 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
+
+app.get("/", (req, res) => {
+  const currentTime = new Date();
+  let seconds = currentTime.getSeconds();
+  let message;
+  if (seconds < 45) {
+    message = "Game is running: ";
+  } else {
+    seconds = 45;
+    message = "Break: ";
+  }
+  res.send(`${message}${seconds}`);
+});
 
 app.post("/api/nickname", (req, res) => {
   const { nickname } = req.body;
