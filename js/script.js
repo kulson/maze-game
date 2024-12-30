@@ -45,7 +45,6 @@ function create() {
   keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-  //this.add.line(0, 0, 100, 100, 200, 200, 0xff0000);
 }
 
 var directions = [
@@ -74,7 +73,16 @@ function update() {
   knight.y = knightPosition.y * 64;
 }
 
-function endGame() {}
+function endGame() {
+  axios
+    .post("http://localhost:3000/api/end", { nickname })
+    .then((response) => {
+      console.log("Information about game finish send: ", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending information about game: ", error);
+    });
+}
 
 function moveTo(direction) {
   var currentknightPosition = {
@@ -93,7 +101,6 @@ function moveTo(direction) {
       currentknightPosition.x === ROWS - 1 &&
       currentknightPosition.y === COLS - 1
     ) {
-      console.log("koniec gry");
       endGame();
     }
   } else {
