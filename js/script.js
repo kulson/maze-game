@@ -52,8 +52,6 @@ function initMap() {
     for (let j = 0; j < nArr[i].length; j++) {
       console.log(nArr[i][j]);
       if (nArr[i][j] === 0) {
-        let block = this.add.image(i * 32, j * 32, "block");
-        block.setDisplaySize(64, 64);
       }
     }
   }
@@ -83,6 +81,8 @@ function create() {
   keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  //let block = this.add.image(i * 32, j * 32, "block");
+  //block.setDisplaySize(64, 64);
 }
 
 var directions = [
