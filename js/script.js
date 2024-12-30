@@ -1,13 +1,10 @@
-// map dimensions
 var ROWS = 12;
 var COLS = 12;
 
 var gameWidth = 64 * ROWS;
 var gameHeight = 64 * COLS;
 
-// the structure of the map
-
-var map;
+var map = null;
 
 var keyA;
 var keyS;
@@ -33,9 +30,50 @@ var knight;
 function preload() {
   this.load.image("knight", "assets/knight.png?v=3");
   this.load.image("finish", "assets/finish.png");
+  this.load.image("block", "assets/block.png");
+}
+
+function initMap() {
+  console.log(map);
+  let arr = [];
+  for (const x of map) {
+    if (x === "1") {
+      arr.push(1);
+    }
+    if (x === "0") {
+      arr.push(0);
+    }
+  }
+  let nArr = [];
+  while (arr.length > 0) {
+    nArr.push(arr.splice(0, 11));
+  }
+  for (let i = 0; i < nArr.length; i++) {
+    for (let j = 0; j < nArr[i].length; j++) {
+      console.log(nArr[i][j]);
+      if (nArr[i][j] === 0) {
+        let block = this.add.image(i * 32, j * 32, "block");
+        block.setDisplaySize(64, 64);
+      }
+    }
+  }
+}
+
+function getMap() {
+  axios
+    .get("http://localhost:3000/map")
+    .then((response) => {
+      console.log("Map received successfully:", response.data);
+      map = response.data;
+      initMap();
+    })
+    .catch((error) => {
+      console.error("Error received map:", error);
+    });
 }
 
 function create() {
+  getMap();
   knight = this.add.image(0, 0, "knight");
   knight.setOrigin(0, 0);
   knight.setDisplaySize(64, 64);
