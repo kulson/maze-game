@@ -1,5 +1,5 @@
-var ROWS = 13;
-var COLS = 13;
+var ROWS = 15;
+var COLS = 15;
 
 var gameWidth = 64 * ROWS;
 var gameHeight = 64 * COLS;

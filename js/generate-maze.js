@@ -1,4 +1,4 @@
-function generate(rows, cols) {
+export function generate(rows, cols) {
   let kol = [];
   let anc = new Array(rows * cols);
   let mass = new Array(rows * cols).fill(1);
@@ -63,7 +63,7 @@ function generate(rows, cols) {
   return kruskal();
 }
 
-function startowe(rows, cols, mst) {
+export function startowe(rows, cols, mst) {
   let vis = Array.from({ length: 2 * rows - 1 }, () =>
     Array(2 * cols - 1).fill(false),
   );
@@ -119,9 +119,5 @@ function startowe(rows, cols, mst) {
   return {
     start: { x: farthest1.x, y: farthest1.y },
     end: { x: farthest2.x, y: farthest2.y },
-    distance: farthest2.distance,
   };
 }
-
-var grid = generate(6, 6);
-console.log(grid);
