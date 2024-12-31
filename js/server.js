@@ -168,7 +168,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/map", (req, res) => {
-  res.send(`${grid}`);
+  res.send(grid);
 });
 
 app.get("/locations", (req, res) => {

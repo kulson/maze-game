@@ -61,21 +61,6 @@ function preload() {
 }
 
 function initMap(scene) {
-  console.log(map);
-  let arr = [];
-  for (const x of map) {
-    if (x === "1") {
-      arr.push(1);
-    }
-    if (x === "0") {
-      arr.push(0);
-    }
-  }
-  let nArr = [];
-  while (arr.length > 0) {
-    nArr.push(arr.splice(0, 11));
-  }
-  map = nArr;
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
       if (map[i][j] === 0) {
@@ -136,6 +121,7 @@ function getPoints(scene) {
 }
 
 function create() {
+  gamePaused = false;
   getMap(this);
   getPoints(this);
   keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -200,12 +186,11 @@ function moveTo(direction) {
     currentknightPosition.y >= 0 &&
     currentknightPosition.y <= ROWS - 1
   ) {
-    /*
     if (map != null) {
       if (map[currentknightPosition.x][currentknightPosition.y] === 1) {
         if (
-          currentknightPosition.x === ROWS - 1 &&
-          currentknightPosition.y === COLS - 1
+          currentknightPosition.x === finishPosition.x &&
+          currentknightPosition.y === finishPosition.y
         ) {
           winGame();
         }
@@ -213,13 +198,6 @@ function moveTo(direction) {
         currentknightPosition.x = knightPosition.x;
         currentknightPosition.y = knightPosition.y;
       }
-    }
-    */
-    if (
-      currentknightPosition.x === finishPosition.x &&
-      currentknightPosition.y === finishPosition.y
-    ) {
-      winGame();
     }
   } else {
     currentknightPosition.x = knightPosition.x;
