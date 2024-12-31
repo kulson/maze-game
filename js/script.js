@@ -1,5 +1,5 @@
-var ROWS = 12;
-var COLS = 12;
+var ROWS = 13;
+var COLS = 13;
 
 var gameWidth = 64 * ROWS;
 var gameHeight = 64 * COLS;
@@ -101,6 +101,7 @@ function initCharacters(scene) {
     "finish",
   );
   finish.setDisplaySize(64, 64);
+  finish.setOrigin(0, 0);
 }
 
 function getMap(scene) {

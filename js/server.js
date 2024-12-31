@@ -138,8 +138,9 @@ let pairs = [];
 var ROWS = 7;
 var COLS = 7;
 
-var grid = generate(7, 7);
-var points = startowe(7, 7, grid);
+var grid = generate(ROWS, COLS);
+console.log(grid);
+var points = startowe(ROWS, COLS, grid);
 var startPoint = points.start;
 var endPoint = points.end;
 
@@ -154,8 +155,8 @@ const startBreak = schedule.scheduleJob("45 * * * * *", function () {
 
 const startGame = schedule.scheduleJob("0 * * * * *", function () {
   pairs = [];
-  grid = generate(7, 7);
-  points = startowe(7, 7, grid);
+  grid = generate(ROWS, COLS);
+  points = startowe(ROWS, COLS, grid);
   startPoint = points.start;
   endPoint = points.end;
 });
