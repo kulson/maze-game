@@ -42,16 +42,16 @@ var gamePaused = false;
 export function newGame() {
   if (game != null) {
     game.destroy(true);
-    game = null;
   }
+  game = null;
   game = new Phaser.Game(config);
 }
 
 export function endGame() {
   if (game != null) {
     game.destroy(true);
-    game = null;
   }
+  game = null;
 }
 
 function preload() {
@@ -141,6 +141,13 @@ function create() {
   keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  knight = this.add.image(
+    knightPosition.x * 64,
+    knightPosition.y * 64,
+    "knight",
+  );
+  knight.setOrigin(0, 0);
+  knight.setDisplaySize(0, 0);
 }
 
 var directions = [
