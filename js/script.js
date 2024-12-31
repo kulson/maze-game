@@ -150,12 +150,16 @@ function update() {
   }
   if (keyA.isDown) {
     knightPosition = moveTo(directions[0]);
+    keyA.isDown = false;
   } else if (keyD.isDown) {
     knightPosition = moveTo(directions[1]);
+    keyD.isDown = false;
   } else if (keyW.isDown) {
     knightPosition = moveTo(directions[2]);
+    keyW.isDown = false;
   } else if (keyS.isDown) {
     knightPosition = moveTo(directions[3]);
+    keyS.isDown = false;
   }
   knight.x = knightPosition.x * 64;
   knight.y = knightPosition.y * 64;
