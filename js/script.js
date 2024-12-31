@@ -33,7 +33,7 @@ function preload() {
   this.load.image("block", "assets/block.png");
 }
 
-function initMap() {
+function initMap(scene) {
   console.log(map);
   let arr = [];
   for (const x of map) {
@@ -48,22 +48,25 @@ function initMap() {
   while (arr.length > 0) {
     nArr.push(arr.splice(0, 11));
   }
-  for (let i = 0; i < nArr.length; i++) {
-    for (let j = 0; j < nArr[i].length; j++) {
-      console.log(nArr[i][j]);
-      if (nArr[i][j] === 0) {
+  map = nArr;
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map[i].length; j++) {
+      if (map[i][j] === 0) {
+        let block = scene.add.image(i * 64, j * 64, "block");
+        block.setOrigin(0, 0);
+        block.setDisplaySize(64, 64);
       }
     }
   }
 }
 
-function getMap() {
+function getMap(scene) {
   axios
     .get("http://localhost:3000/map")
     .then((response) => {
       console.log("Map received successfully:", response.data);
       map = response.data;
-      initMap();
+      initMap(scene);
     })
     .catch((error) => {
       console.error("Error received map:", error);
@@ -71,7 +74,7 @@ function getMap() {
 }
 
 function create() {
-  getMap();
+  getMap(this);
   knight = this.add.image(0, 0, "knight");
   knight.setOrigin(0, 0);
   knight.setDisplaySize(64, 64);
@@ -135,11 +138,18 @@ function moveTo(direction) {
     currentknightPosition.y >= 0 &&
     currentknightPosition.y <= ROWS - 1
   ) {
-    if (
-      currentknightPosition.x === ROWS - 1 &&
-      currentknightPosition.y === COLS - 1
-    ) {
-      endGame();
+    if (map != null) {
+      if (map[currentknightPosition.x][currentknightPosition.y] === 1) {
+        if (
+          currentknightPosition.x === ROWS - 1 &&
+          currentknightPosition.y === COLS - 1
+        ) {
+          endGame();
+        }
+      } else {
+        currentknightPosition.x = knightPosition.x;
+        currentknightPosition.y = knightPosition.y;
+      }
     }
   } else {
     currentknightPosition.x = knightPosition.x;

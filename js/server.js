@@ -137,9 +137,10 @@ let pairs = [];
 
 function gameSummary() {
   pairs.sort((a, b) => a.date - b.date);
+  console.log(pairs);
 }
 
-var grid = generate(6, 6);
+var grid = generate(7, 7);
 
 app.get("/", (req, res) => {
   const currentTime = new Date();
@@ -147,7 +148,10 @@ app.get("/", (req, res) => {
   let message;
   if (seconds === 0) {
     pairs = [];
-    grid = generate(6, 6);
+    grid = generate(7, 7);
+  }
+  if (seconds === 45) {
+    gameSummary();
   }
   if (seconds < 45) {
     seconds = 45 - seconds;
@@ -177,7 +181,7 @@ function append_pair(user, date) {
 app.post("/api/end", (req, res) => {
   const { nickname } = req.body;
   console.log("Received user who end game:", nickname);
-  append_pair(nickname, new Date());
+  append_pair(nickname, new Date().getSeconds());
   res.send({ status: "success", message: "Information received" });
 });
 
