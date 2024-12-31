@@ -30,13 +30,20 @@ var knightPosition = {
   y: 0,
 };
 
-var restart = false;
+var knight;
+
+var finishPosition = {
+  x: 0,
+  y: 0,
+};
+
+var gamePaused = false;
 
 export function newGame() {
-  knightPosition = {
-    x: 0,
-    y: 0,
-  };
+  if (game != null) {
+    game.destroy(true);
+    game = null;
+  }
   game = new Phaser.Game(config);
 }
 
@@ -46,8 +53,6 @@ export function endGame() {
     game = null;
   }
 }
-
-var knight;
 
 function preload() {
   this.load.image("knight", "assets/knight.png?v=3");
@@ -82,6 +87,22 @@ function initMap(scene) {
   }
 }
 
+function initCharacters(scene) {
+  knight = scene.add.image(
+    knightPosition.x * 64,
+    knightPosition.y * 64,
+    "knight",
+  );
+  knight.setOrigin(0, 0);
+  knight.setDisplaySize(64, 64);
+  let finish = scene.add.image(
+    finishPosition.x * 64,
+    finishPosition.y * 64,
+    "finish",
+  );
+  finish.setDisplaySize(64, 64);
+}
+
 function getMap(scene) {
   axios
     .get("http://localhost:3000/map")
@@ -100,8 +121,13 @@ function getPoints(scene) {
     .get("http://localhost:3000/locations")
     .then((response) => {
       console.log("Locations received successfully:", response.data);
-      map = response.data;
-      initMap(scene);
+      let str = response.data;
+      const numbers = str.match(/\d+/g).map(Number);
+      knightPosition.x = numbers[0];
+      knightPosition.y = numbers[1];
+      finishPosition.x = numbers[2];
+      finishPosition.y = numbers[3];
+      initCharacters(scene);
     })
     .catch((error) => {
       console.error("Error receiving locations :", error);
@@ -111,11 +137,6 @@ function getPoints(scene) {
 function create() {
   getMap(this);
   getPoints(this);
-  knight = this.add.image(0, 0, "knight");
-  knight.setOrigin(0, 0);
-  knight.setDisplaySize(64, 64);
-  let finish = this.add.image(gameWidth - 32, gameHeight - 32, "finish");
-  finish.setDisplaySize(64, 64);
   keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
   keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -130,10 +151,6 @@ var directions = [
 ];
 
 function update() {
-  if (restart) {
-    this.scene.restart();
-    restart = false;
-  }
   if (gamePaused) {
     this.scene.pause();
   }
@@ -191,8 +208,8 @@ function moveTo(direction) {
     }
     */
     if (
-      currentknightPosition.x === ROWS - 1 &&
-      currentknightPosition.y === COLS - 1
+      currentknightPosition.x === finishPosition.x &&
+      currentknightPosition.y === finishPosition.y
     ) {
       winGame();
     }
