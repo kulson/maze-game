@@ -1,0 +1,26 @@
+@font-face {
+    font-family: "CustomFont";
+    src: url("../assets/ByteBounce.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "CustomFont", sans-serif;
+    font-size: 48px;
+    background-color: #000;
+    color: #fff;
+}
+
+#game-container {
+    border: 1px solid red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
