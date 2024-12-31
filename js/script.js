@@ -23,7 +23,29 @@ var config = {
   },
 };
 
-var game = new Phaser.Game(config);
+var game = null;
+
+var knightPosition = {
+  x: 0,
+  y: 0,
+};
+
+var restart = false;
+
+export function newGame() {
+  knightPosition = {
+    x: 0,
+    y: 0,
+  };
+  game = new Phaser.Game(config);
+}
+
+export function endGame() {
+  if (game != null) {
+    game.destroy(true);
+    game = null;
+  }
+}
 
 var knight;
 
@@ -69,12 +91,26 @@ function getMap(scene) {
       initMap(scene);
     })
     .catch((error) => {
-      console.error("Error received map:", error);
+      console.error("Error receiving map:", error);
+    });
+}
+
+function getPoints(scene) {
+  axios
+    .get("http://localhost:3000/locations")
+    .then((response) => {
+      console.log("Locations received successfully:", response.data);
+      map = response.data;
+      initMap(scene);
+    })
+    .catch((error) => {
+      console.error("Error receiving locations :", error);
     });
 }
 
 function create() {
   getMap(this);
+  getPoints(this);
   knight = this.add.image(0, 0, "knight");
   knight.setOrigin(0, 0);
   knight.setDisplaySize(64, 64);
@@ -84,8 +120,6 @@ function create() {
   keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-  //let block = this.add.image(i * 32, j * 32, "block");
-  //block.setDisplaySize(64, 64);
 }
 
 var directions = [
@@ -95,12 +129,14 @@ var directions = [
   { x: 0, y: 1 },
 ];
 
-var knightPosition = {
-  x: 0,
-  y: 0,
-};
-
 function update() {
+  if (restart) {
+    this.scene.restart();
+    restart = false;
+  }
+  if (gamePaused) {
+    this.scene.pause();
+  }
   if (keyA.isDown) {
     knightPosition = moveTo(directions[0]);
   } else if (keyD.isDown) {
@@ -114,7 +150,8 @@ function update() {
   knight.y = knightPosition.y * 64;
 }
 
-function endGame() {
+function winGame() {
+  gamePaused = true;
   axios
     .post("http://localhost:3000/api/end", { nickname })
     .then((response) => {
@@ -138,18 +175,26 @@ function moveTo(direction) {
     currentknightPosition.y >= 0 &&
     currentknightPosition.y <= ROWS - 1
   ) {
+    /*
     if (map != null) {
       if (map[currentknightPosition.x][currentknightPosition.y] === 1) {
         if (
           currentknightPosition.x === ROWS - 1 &&
           currentknightPosition.y === COLS - 1
         ) {
-          endGame();
+          winGame();
         }
       } else {
         currentknightPosition.x = knightPosition.x;
         currentknightPosition.y = knightPosition.y;
       }
+    }
+    */
+    if (
+      currentknightPosition.x === ROWS - 1 &&
+      currentknightPosition.y === COLS - 1
+    ) {
+      winGame();
     }
   } else {
     currentknightPosition.x = knightPosition.x;

@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const schedule = require("node-schedule");
 
 const app = express();
 const PORT = 3000;
@@ -129,43 +130,48 @@ function startowe(rows, cols, mst) {
   return {
     start: { x: farthest1.x, y: farthest1.y },
     end: { x: farthest2.x, y: farthest2.y },
-    distance: farthest2.distance,
   };
 }
 
 let pairs = [];
+
+var ROWS = 7;
+var COLS = 7;
+
+var grid = generate(7, 7);
+var points = startowe(7, 7, grid);
+var startPoint = points.start;
+var endPoint = points.end;
 
 function gameSummary() {
   pairs.sort((a, b) => a.date - b.date);
   console.log(pairs);
 }
 
-var grid = generate(7, 7);
+const startBreak = schedule.scheduleJob("45 * * * * *", function () {
+  gameSummary();
+});
+
+const startGame = schedule.scheduleJob("0 * * * * *", function () {
+  pairs = [];
+  grid = generate(7, 7);
+  points = startowe(7, 7, grid);
+  startPoint = points.start;
+  endPoint = points.end;
+});
 
 app.get("/", (req, res) => {
   const currentTime = new Date();
   let seconds = currentTime.getSeconds();
-  let message;
-  if (seconds === 0) {
-    pairs = [];
-    grid = generate(7, 7);
-  }
-  if (seconds === 45) {
-    gameSummary();
-  }
-  if (seconds < 45) {
-    seconds = 45 - seconds;
-    message = "Game is running: ";
-  } else {
-    seconds -= 45;
-    seconds = 15 - seconds;
-    message = "Break: ";
-  }
-  res.send(`${message}${seconds}`);
+  res.send(`${seconds}`);
 });
 
 app.get("/map", (req, res) => {
   res.send(`${grid}`);
+});
+
+app.get("/locations", (req, res) => {
+  res.send(`${startPoint.x} ${startPoint.y} ${endPoint.x} ${endPoint.y}`);
 });
 
 app.post("/api/nickname", (req, res) => {
@@ -174,14 +180,10 @@ app.post("/api/nickname", (req, res) => {
   res.send({ status: "success", message: "Nickname received" });
 });
 
-function append_pair(user, date) {
-  pairs.push({ user: user, date: date });
-}
-
 app.post("/api/end", (req, res) => {
   const { nickname } = req.body;
   console.log("Received user who end game:", nickname);
-  append_pair(nickname, new Date().getSeconds());
+  pairs.push(nickname, new Date().getSeconds());
   res.send({ status: "success", message: "Information received" });
 });
 
