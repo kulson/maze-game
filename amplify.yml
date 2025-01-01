@@ -4,10 +4,6 @@ frontend:
     postBuild:
       commands:
         - node js/server.js
-artifacts:
-  baseDirectory: .amplify-hosting # Adjust if necessary
-  files:
-    - "**/*"
 cache:
   paths:
     - node_modules/**/*
