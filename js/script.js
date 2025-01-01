@@ -1,8 +1,10 @@
 var ROWS = 15;
 var COLS = 15;
 
-var gameWidth = 64 * ROWS;
-var gameHeight = 64 * COLS;
+var imageSize = 48;
+
+var gameWidth = imageSize * ROWS;
+var gameHeight = imageSize * COLS;
 
 var map = null;
 
@@ -64,9 +66,9 @@ function initMap(scene) {
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
       if (map[i][j] === 0) {
-        let block = scene.add.image(i * 64, j * 64, "block");
+        let block = scene.add.image(i * imageSize, j * imageSize, "block");
         block.setOrigin(0, 0);
-        block.setDisplaySize(64, 64);
+        block.setDisplaySize(imageSize, imageSize);
       }
     }
   }
@@ -74,18 +76,18 @@ function initMap(scene) {
 
 function initCharacters(scene) {
   knight = scene.add.image(
-    knightPosition.x * 64,
-    knightPosition.y * 64,
+    knightPosition.x * imageSize,
+    knightPosition.y * imageSize,
     "knight",
   );
   knight.setOrigin(0, 0);
-  knight.setDisplaySize(64, 64);
+  knight.setDisplaySize(imageSize, imageSize);
   let finish = scene.add.image(
-    finishPosition.x * 64,
-    finishPosition.y * 64,
+    finishPosition.x * imageSize,
+    finishPosition.y * imageSize,
     "finish",
   );
-  finish.setDisplaySize(64, 64);
+  finish.setDisplaySize(imageSize, imageSize);
   finish.setOrigin(0, 0);
 }
 
@@ -129,8 +131,8 @@ function create() {
   keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
   knight = this.add.image(
-    knightPosition.x * 64,
-    knightPosition.y * 64,
+    knightPosition.x * imageSize,
+    knightPosition.y * imageSize,
     "knight",
   );
   knight.setOrigin(0, 0);
@@ -161,12 +163,13 @@ function update() {
     knightPosition = moveTo(directions[3]);
     keyS.isDown = false;
   }
-  knight.x = knightPosition.x * 64;
-  knight.y = knightPosition.y * 64;
+  knight.x = knightPosition.x * imageSize;
+  knight.y = knightPosition.y * imageSize;
 }
 
 function winGame() {
   gamePaused = true;
+  const nickname = localStorage.getItem("nickname");
   axios
     .post("http://localhost:3000/api/end", { nickname })
     .then((response) => {

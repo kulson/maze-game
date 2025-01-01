@@ -19,8 +19,7 @@ function fetchServerTime() {
         seconds = 45 - seconds;
         message = "Game is running: ";
       } else {
-        seconds -= 45;
-        seconds = 15 - seconds;
+        seconds = 15 - (seconds - 45);
         message = "Break: ";
       }
       document.getElementById("serverTime").innerHTML =
