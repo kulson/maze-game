@@ -1,4 +1,4 @@
-var ip = "http://18.194.89.132";
+var ip = "http://18.194.89.132:3000";
 
 import { newGame, endGame } from "./script.js";
 function fetchServerTime() {
