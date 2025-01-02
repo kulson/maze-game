@@ -13,6 +13,8 @@ var keyS;
 var keyD;
 var keyW;
 
+var ip = "http://18.194.89.132";
+
 var config = {
   type: Phaser.CANVAS,
   parent: "game-container",
@@ -93,7 +95,7 @@ function initCharacters(scene) {
 
 function getMap(scene) {
   axios
-    .get("http://localhost:3000/api/map")
+    .get(`${ip}/api/map`)
     .then((response) => {
       console.log("Map received successfully:", response.data);
       map = response.data;
@@ -106,7 +108,7 @@ function getMap(scene) {
 
 function getPoints(scene) {
   axios
-    .get("http://localhost:3000/api/locations")
+    .get(`${ip}/api/locations`)
     .then((response) => {
       console.log("Locations received successfully:", response.data);
       let str = response.data;
@@ -171,7 +173,7 @@ function winGame() {
   gamePaused = true;
   const nickname = localStorage.getItem("nickname");
   axios
-    .post("http://localhost:3000/api/end", { nickname })
+    .post(`${ip}/api/end`, { nickname })
     .then((response) => {
       console.log("Information about game finish send: ", response.data);
     })

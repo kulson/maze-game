@@ -1,8 +1,10 @@
+var ip = "http://18.194.89.132";
+
 import { newGame, endGame } from "./script.js";
 function fetchServerTime() {
   setInterval(async () => {
     try {
-      const response = await fetch("http://localhost:3000/api");
+      const response = await fetch(`${ip}/api`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
