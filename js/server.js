@@ -23,7 +23,6 @@ var endPoint = points.end;
 
 function gameSummary() {
   pairs.sort((a, b) => a.date - b.date);
-  console.log(pairs);
 }
 
 const startBreak = schedule.scheduleJob("45 * * * * *", function () {
@@ -38,18 +37,22 @@ const startGame = schedule.scheduleJob("0 * * * * *", function () {
   endPoint = points.end;
 });
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   const currentTime = new Date();
   let seconds = currentTime.getSeconds();
   res.send(`${seconds}`);
 });
 
-app.get("/map", (req, res) => {
+app.get("/api/map", (req, res) => {
   res.send(grid);
 });
 
-app.get("/locations", (req, res) => {
+app.get("/api/locations", (req, res) => {
   res.send(`${startPoint.x} ${startPoint.y} ${endPoint.x} ${endPoint.y}`);
+});
+
+app.get("/api/scoreboard", (req, res) => {
+  res.send(pairs);
 });
 
 app.post("/api/end", (req, res) => {

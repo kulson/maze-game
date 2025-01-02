@@ -93,7 +93,7 @@ function initCharacters(scene) {
 
 function getMap(scene) {
   axios
-    .get("http://localhost:3000/map")
+    .get("http://localhost:3000/api/map")
     .then((response) => {
       console.log("Map received successfully:", response.data);
       map = response.data;
@@ -106,7 +106,7 @@ function getMap(scene) {
 
 function getPoints(scene) {
   axios
-    .get("http://localhost:3000/locations")
+    .get("http://localhost:3000/api/locations")
     .then((response) => {
       console.log("Locations received successfully:", response.data);
       let str = response.data;
