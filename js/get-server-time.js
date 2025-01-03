@@ -1,11 +1,12 @@
 import { newGame, endGame } from "./script.js";
 
-const ip = "http://localhost:3000";
+const ip = "http://18.198.1.144:3000";
+const agent = new HttpsProxyAgent(ip);
 
 function fetchServerTime() {
   setInterval(async () => {
     try {
-      let response = await axios.get(`${ip}/api`);
+      let response = await axios.get(`${ip}/api`, { httpsAgent: agent });
       let seconds = parseInt(response.data); // Parse the response data as an integer
 
       console.log("Server Time:", seconds);

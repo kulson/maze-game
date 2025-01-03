@@ -13,7 +13,8 @@ var keyS;
 var keyD;
 var keyW;
 
-const ip = "http://localhost:3000";
+const ip = "http://18.198.1.144:3000";
+const agent = new HttpsProxyAgent(ip);
 
 var config = {
   type: Phaser.CANVAS,
@@ -95,7 +96,7 @@ function initCharacters(scene) {
 
 function getMap(scene) {
   axios
-    .get(`${ip}/api/map`)
+    .get(`${ip}/api/map`, { httpsAgent: agent })
     .then((response) => {
       console.log("Map received successfully:", response.data);
       map = response.data;
@@ -108,7 +109,7 @@ function getMap(scene) {
 
 function getPoints(scene) {
   axios
-    .get(`${ip}/api/locations`)
+    .get(`${ip}/api/locations`, { httpsAgent: agent })
     .then((response) => {
       console.log("Locations received successfully:", response.data);
       let str = response.data;
@@ -173,7 +174,7 @@ function winGame() {
   gamePaused = true;
   const nickname = localStorage.getItem("nickname");
   axios
-    .post(`${ip}/api/end`, { nickname })
+    .post(`${ip}/api/end`, { nickname }, { httpsAgent: agent })
     .then((response) => {
       console.log("Information about game finish send: ", response.data);
     })
