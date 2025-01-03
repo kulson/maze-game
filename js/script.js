@@ -13,7 +13,7 @@ var keyS;
 var keyD;
 var keyW;
 
-var ip = "http://18.194.89.132:3000";
+const ip = "http://18.198.1.144:3000";
 
 var config = {
   type: Phaser.CANVAS,
