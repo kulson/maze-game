@@ -13,7 +13,7 @@ var keyS;
 var keyD;
 var keyW;
 
-const ip = "https://mazegameonline.work.gd";
+const ip = "https://mazegameonlineapi.run.place";
 
 var config = {
   type: Phaser.CANVAS,
