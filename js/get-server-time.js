@@ -1,28 +1,31 @@
 import { newGame, endGame } from "./script.js";
+
+const ip = "https://mazegameonline.work.gd";
+
 function fetchServerTime() {
   setInterval(async () => {
     try {
-      const response = await fetch("http://localhost:3000/");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      let seconds = await response.text();
-      if (seconds === "0") {
+      let response = await axios.get(`${ip}/api`);
+      let seconds = parseInt(response.data); // Parse the response data as an integer
+
+      console.log("Server Time:", seconds);
+
+      if (seconds === 0) {
         newGame();
       }
-      if (seconds === "45") {
+      if (seconds === 45) {
         endGame();
       }
-      console.log("Server Time:", seconds);
+
       let message;
       if (seconds < 45) {
-        seconds = 45 - seconds;
         message = "Game is running: ";
+        seconds = 45 - seconds;
       } else {
-        seconds -= 45;
-        seconds = 15 - seconds;
         message = "Break: ";
+        seconds = 15 - (seconds - 45);
       }
+
       document.getElementById("serverTime").innerHTML =
         message + seconds + " seconds";
     } catch (error) {
