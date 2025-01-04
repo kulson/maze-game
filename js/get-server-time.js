@@ -1,6 +1,6 @@
 import { newGame, endGame } from "./script.js";
 
-const ip = "mazegameonline.work.gd";
+const ip = "https://mazegameonline.work.gd";
 
 function fetchServerTime() {
   setInterval(async () => {
