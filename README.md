@@ -28,4 +28,10 @@ Click [here](https://main.dw2uffzoq9fxk.amplifyapp.com/) to start playing the ga
 4. 🍺 Your task is to reach the end point marked by the beer icon.
 5. ⏱️ After 45 seconds, a break lasting 15 seconds begins, during which a table with the results of the players is shown.
 
+## 📸 Example Screenshots
+
+### Main Game Screen
+![Main Game Screen](images/game_screen.png)
+
+
 Enjoy the game and may the best player win! 🍻
