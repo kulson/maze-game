@@ -9,10 +9,13 @@ Introduction to cloud computing project
 - CSS
 - JavaScript
 - Phaser JS Framework
+- Hosted on AWS Amplify
+
 
 ### Backend (Branch: `backend`)
 - Node.js
 - Express Framework
+- Hosted on AWS EC2
 
 ## 🎮 How to Play
 Click [here](https://main.dw2uffzoq9fxk.amplifyapp.com/) to start playing the game!
