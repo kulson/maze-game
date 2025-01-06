@@ -1,12 +1,12 @@
 import { newGame, endGame } from "./script.js";
 
-const ip = "https://mazegameonline.work.gd";
+const ip = "https://mazegameonlineapi.run.place";
 
 function fetchServerTime() {
   setInterval(async () => {
     try {
       let response = await axios.get(`${ip}/api`);
-      let seconds = parseInt(response.data); // Parse the response data as an integer
+      let seconds = parseInt(response.data);
 
       console.log("Server Time:", seconds);
 

@@ -16,7 +16,24 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <div id="serverTime">Loading server time...</div>
+        <div id="server-time-container">
+            <div id="serverTime">Loading server time...</div>
+        </div>
+
         <div id="game-container"></div>
-    </body>
+
+    <div id="scoreboard-container" style ="opacity: 0">
+        <h2 style="text-align: center;">Scoreboard</h2>
+            <table id="scoreboard">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Place</th>
+                        <th style="text-align: center;">Name</th>
+                        <th style="text-align: center;">Time</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboard-body"></tbody>
+            </table>
+    </div>
+</body>
 </html>
