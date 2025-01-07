@@ -197,20 +197,24 @@ function displayScore()
         const tableBody = document.getElementById("scoreboard-body");
         tableBody.innerHTML = "";
         let index = 1;
-        scoreboard.forEach((player) => {
-          const row = document.createElement("tr");
-                const indCell = document.createElement("td");
-                const nameCell = document.createElement("td");
-                const timeCell = document.createElement("td");
-                indCell.textContent = index.toString();
-                index++;
-                nameCell.textContent = player.name;
-                timeCell.textContent = player.time;
-                row.appendChild(indCell);
-                row.appendChild(nameCell);
-                row.appendChild(timeCell);
-                tableBody.appendChild(row);
-            });
+        console.log(scoreboard);
+        for(let i=0;i<scoreboard.length;i+=2)
+        {
+            let nejm = scoreboard[i];
+            let time = scoreboard[i+1] || "Unknown"
+            const row = document.createElement("tr");
+            const indCell = document.createElement("td");
+            const nameCell = document.createElement("td");
+            const timeCell = document.createElement("td");
+            indCell.textContent = index.toString();
+            index++;
+            nameCell.textContent = nejm;
+            timeCell.textContent = time.toString();
+            row.appendChild(indCell);
+            row.appendChild(nameCell);
+            row.appendChild(timeCell);
+            tableBody.appendChild(row);
+          }
       })
       .catch((error) => {
         console.error("skorbord no work:", error);
