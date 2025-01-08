@@ -33,5 +33,7 @@ Click [here](https://main.dw2uffzoq9fxk.amplifyapp.com/) to start playing the ga
 ### Main Game Screen
 ![Main Game Screen](images/game_screen.png)
 
+### Summary Screen
+![Summary Screen](images/end_screen.png)
 
 Enjoy the game and may the best player win! 🍻
