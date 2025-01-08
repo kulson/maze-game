@@ -48,10 +48,13 @@ export function newGame() {
     game.destroy(true);
   }
   game = null;
+  hideScore();
   game = new Phaser.Game(config);
 }
 
 export function endGame() {
+  console.log("tu sie powinna wyswietlac tabelka")
+  displayScore();
   if (game != null) {
     game.destroy(true);
   }
@@ -150,6 +153,7 @@ var directions = [
 
 function update() {
   if (gamePaused) {
+    console.log("pause");
     this.scene.pause();
   }
   if (keyA.isDown) {
@@ -180,6 +184,46 @@ function winGame() {
     .catch((error) => {
       console.error("Error sending information about game: ", error);
     });
+}
+
+function displayScore()
+{
+  document.getElementById("scoreboard-container").style.opacity = 1;
+    axios
+      .get(`${ip}/api/scoreboard`)
+      .then((response) => {
+        console.log("dziala w sumie")
+        const scoreboard = response.data;
+        const tableBody = document.getElementById("scoreboard-body");
+        tableBody.innerHTML = "";
+        let index = 1;
+        console.log(scoreboard);
+        for(let i=0;i<scoreboard.length;i+=2)
+        {
+            let nejm = scoreboard[i];
+            let time = scoreboard[i+1] || "Unknown"
+            const row = document.createElement("tr");
+            const indCell = document.createElement("td");
+            const nameCell = document.createElement("td");
+            const timeCell = document.createElement("td");
+            indCell.textContent = index.toString();
+            index++;
+            nameCell.textContent = nejm;
+            timeCell.textContent = time.toString();
+            row.appendChild(indCell);
+            row.appendChild(nameCell);
+            row.appendChild(timeCell);
+            tableBody.appendChild(row);
+          }
+      })
+      .catch((error) => {
+        console.error("skorbord no work:", error);
+      });
+}
+
+
+function hideScore() {
+  document.getElementById("scoreboard-container").style.opacity = 0;
 }
 
 function moveTo(direction) {

@@ -6,7 +6,7 @@ function fetchServerTime() {
   setInterval(async () => {
     try {
       let response = await axios.get(`${ip}/api`);
-      let seconds = parseInt(response.data); // Parse the response data as an integer
+      let seconds = parseInt(response.data);
 
       console.log("Server Time:", seconds);
 
